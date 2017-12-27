@@ -1,0 +1,32 @@
+<?php
+$fullname = $form->get('fullname');
+//  $email = $f2->get('email');
+  $age = $form->get('input_number');
+  $email = $form->get('my_email');
+  $password = $form->get('my_password');
+  $reset = $form->get('my_reset');
+  $submit = $form->get('my_submit');
+  $captcha = $form->get('my_captcha');
+  $file = $form->get('my_file');
+  $form->prepare();
+?>
+
+
+
+<div class="row">
+<?= $this->form()->openTag($form) ?>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <?= $this->formRow($fullname) ?>
+        <?= $this->formRow($age) ?>
+        <?= $this->formRow($email) ?>
+        <?= $this->formRow($password) ?>
+        <?= $this->formRow($file) ?>
+        <?= $this->formRow($captcha) ?>  
+        <?= $this->formRow($submit) ?>
+    
+        <?= $this->formRow($reset) ?>
+    
+        </div> 
+        <?= $this->form()->closeTag() ?>
+
+</div>

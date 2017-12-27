@@ -1,0 +1,20 @@
+<?php
+$this->headTitle('Upload File');
+$form->setAttributes([
+    'enctype'=> 'multipart/form-data',
+    // 'action' => $this->url('uploadfile', [ //tên route
+    //     'controller'=>'UploadFileController',
+    //     'action'=>'index'
+    // ])
+]);
+$form->prepare();
+echo '<h2>'.$this->escapeHtml('Upload file') .'</h2>';
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('file-upload'));
+echo '<br/>';
+echo $this->formRow($form->get('submit'));
+
+echo $this->form()->closeTag();
+
+
+?>

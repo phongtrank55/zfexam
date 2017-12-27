@@ -1,0 +1,51 @@
+<?php
+$fullname = $form->get('fullname');
+//  $email = $f2->get('email');
+  $age = $form->get('input_number');
+  $email = $form->get('my_email');
+  $hidden = $form->get('hidden_input');
+  $hidden = $form->get('hidden_input');
+  $password = $form->get('my_password');
+  $reset = $form->get('my_reset');
+  $submit = $form->get('my_submit');
+  $captcha = $form->get('my_captcha');
+  $file = $form->get('my_file');
+  $form->prepare();
+?>
+
+
+
+<div class="row">
+<?= $this->form()->openTag($form) ?>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <?php
+        echo $this->formLabel($fullname);
+        // echo $this->formText($fullname);
+        echo $this->formElement($fullname);
+        
+        // echo $this->formHidden($hidden);
+        echo $this->formElement($hidden);
+        echo $this->formLabel($age);
+        echo $this->formElement($age);
+        // echo $this->formNumber($age);
+        echo $this->formLabel($email);
+        // echo $this->formEmail($email);
+        echo $this->formElement($email);
+        echo $this->formLabel($password);
+        // echo $this->formPassword($password);
+        echo $this->formElement($password);
+        
+        echo $this->formLabel($captcha);    
+        echo $this->formElement($captcha);
+
+        echo $this->formButton($reset);
+        echo $this->formButton($submit, 'login');
+        //echo $this->formButton()->render($submit, 'login');
+
+    
+    ?>
+    
+        </div> 
+        <?= $this->form()->closeTag() ?>
+
+</div>

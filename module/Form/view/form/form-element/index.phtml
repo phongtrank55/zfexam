@@ -1,0 +1,50 @@
+<?php
+
+  $fullname = $form->get('fullname');
+//  $email = $f2->get('email');
+  $age = $form->get('input_number');
+  $email = $form->get('my_email');
+  $password = $form->get('my_password');
+  $gender = $form->get('my_radio');
+  $language = $form->get('language');
+  $message = $form->get('message');
+  $checkbox = $form->get('my_checkbox');
+  $file = $form->get('my_file');
+  $multicheckbox = $form->get('my_multicheckbox');
+  $date = $form->get('my_date');
+  $color = $form->get('my_color');
+  $range = $form->get('my_range');
+  $reset = $form->get('my_reset');
+  $submit = $form->get('my_submit');
+  $captcha = $form->get('my_captcha');
+?>
+
+
+<div class="row">
+<?= $this->form()->openTag($form) ?>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <?= $this->formRow($fullname) ?>
+        <?= $this->formRow($age) ?>
+        <?= $this->formRow($email) ?>
+        <?= $this->formRow($password) ?>
+        <?= $this->formRow($gender) ?>
+        <?= $this->formRow($language) ?>
+        <?= $this->formRow($message) ?>
+        <?= $this->formRow($checkbox) ?>
+    </div>  
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        
+        <?= $this->formRow($file) ?>
+        <?= $this->formRow($multicheckbox) ?>
+        <?= $this->formRow($date) ?>
+        <?= $this->formRow($color) ?>
+        <br/>
+        <?= $this->formRow($range) ?>
+        <?= $this->formRow($reset) ?>
+        <?= $this->formRow($submit) ?>
+        <?= $this->formRow($captcha) ?>
+        
+        </div> 
+        <?= $this->form()->closeTag() ?>
+
+</div>
