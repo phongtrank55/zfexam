@@ -51,12 +51,15 @@ return [
         'invokables'=>[
             'Controller\AdapterController' => Controller\AdapterController::class,
             'Controller\SqlController' => Controller\SqlController::class,
+            'Controller\DdlController' => Controller\DdlController::class,
         ],
         'aliases'=>[
             'adapter' => 'Controller\AdapterController',
             'Adapter' => 'Controller\AdapterController',
             'sql' => 'Controller\SqlController',
             'Sql' => 'Controller\SqlController',
+            'Ddl' => 'Controller\DdlController',
+            'ddl' => 'Controller\DdlController',
         ]
     ],
     'view_manager' => [

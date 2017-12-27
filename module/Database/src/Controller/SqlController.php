@@ -29,8 +29,8 @@ class SqlController extends AbstractActionController
         $sql = new Sql($this->adapter);
         $select = $sql->select()->from("foods")->where(["id"=>2]);
 
-        $stm = $sql->prepareStatementForSqlObject($select);
-        $results = $stm->execute();
+        // $stm = $sql->prepareStatementForSqlObject($select);
+        // $results = $stm->execute();
 
         $selectString = $sql->buildSqlString($select);
          $results = $this->adapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);  

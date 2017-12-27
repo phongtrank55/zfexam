@@ -24,4 +24,5 @@ return [
     'Database',
     'Training',
     'Started',
+    'Foods'
 ];

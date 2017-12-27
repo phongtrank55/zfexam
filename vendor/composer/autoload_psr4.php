@@ -36,6 +36,7 @@ return array(
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
     'Hello\\' => array($baseDir . '/module/Hello/src'),
     'Form\\' => array($baseDir . '/module/Form/src'),
+    'Foods\\' => array($baseDir . '/module/Foods/src'),
     'Database\\' => array($baseDir . '/module/Database/src'),
     'ApplicationTest\\' => array($baseDir . '/module/Application/test'),
 );
