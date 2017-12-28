@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Started;
+namespace Foods;
 
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
@@ -19,7 +19,7 @@ return [
                 'options' => [
                     'route'    => '/foods[/:action[/:id]]',
                     'defaults' => [
-                        'controller' => Controller\FoodsComtroller::class,
+                        'controller' => Controller\FoodsController::class,
                         'action'     => 'index',
                     ],
                     'constraints' =>[
@@ -31,10 +31,10 @@ return [
         ],
     ],
     'controllers' => [
-        'factories' => [
+        // 'factories' => [
             
-            Controller\FoodsComtroller::class => InvokableFactory::class,
-        ],
+        //     Controller\FoodsComtroller::class => InvokableFactory::class,
+        // ],
     ],
     'view_manager' => [
         'template_path_stack' => [
