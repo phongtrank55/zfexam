@@ -59,7 +59,7 @@ class UploadFile extends Form
                 [
                     'name'=> 'FileMimeType', ////quy định trong tệp validatorpluginManager
                     'options'=>[
-                        'mimeType'=>['image/png, image/pdf, image/jpeg'],
+                        'mimeType'=>'image/png, image/pdf, image/jpeg',
                         'message'=>[
                             \Zend\Validator\File\MimeType::FALSE_TYPE   => "File không đúng định dạng ảnh!",
                         ],

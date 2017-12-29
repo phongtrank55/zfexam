@@ -57,6 +57,15 @@ class FoodsTable
 
         return $results;
     }
+
+    public function getFoodTypes(){
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select("food_type")->columns(['id', 'name']);
+        $selectString = $sql->buildSqlString($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
+        return $results;
+    }
 }
 
 ?>
