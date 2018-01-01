@@ -1,0 +1,125 @@
+<?php
+$title = "Sửa món ăn";
+$this->headTitle($title);
+$form->prepare();
+?>
+
+
+
+<h2 align="center"><?=$this->escapeHtml($title)?></h2>    
+    <!-- <?=$this->flashMessenger()->render('error',['alert', 'alert-danger'])?> -->
+    <?= $this->flashMessenger()
+            ->setMessageOpenFormat('<div%s>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <ul><li>')
+            ->setMessageSeparatorString('</li><li>')
+            ->setMessageCloseString('</li></ul></div>')
+            ->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+    ?>
+
+<div class="row">
+ 
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-2">
+        <?=$this->form()->openTag($form)?>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("id_type")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('id_type'))?>
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("name")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('name'))?>
+                    <?=$this->formElementErrors($form->get('name'))?>
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("summary")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('summary'))?>
+                    
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("detail")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('detail'))?>
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("price")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('price'))?>
+                    <?=$this->formElementErrors($form->get('price'))?>
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("promotion")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('promotion'))?>
+                    <?=$this->formElementErrors($form->get('promotion'))?>
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("image")->getOption('label')?>
+                </label>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <?=$this->formElement($form->get('image'))?>
+                    <?=$this->formElementErrors($form->get('image'))?>
+                </div>
+                <div class="col-md-3">
+                    <img style="width:120px; height:120px" src="../../img/hinh_mon_an/
+                            <?php try{echo $form->get('image')->getValue();}
+                                catch(Exception $e){
+                                    echo "";
+                                }?>" alt="<?=$form->get('name')->getValue()?>"/>
+                </div>
+            </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("unit")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('unit'))?>
+                </div>
+            <div class="form-group">   
+                <label class="control-label col-sm-4" >
+                    <?=$form->get("today")->getOption('label')?>
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <?=$this->formElement($form->get('today'))?>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-4">
+                    <?=$this->formElement($form->get('submit'))?>
+                </div>
+            </div>
+            <?=$this->formElement($form->get('id'))?>
+        <?=$this->form()->closeTag()?>
+    </div>    
+</div>
+
+<div class="clearfix">
+
+</div>
+
+
+
+

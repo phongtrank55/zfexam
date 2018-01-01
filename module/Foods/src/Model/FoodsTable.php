@@ -66,6 +66,46 @@ class FoodsTable
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
         return $results;
     }
+
+    public function saveFoods(Food $food){
+        $data = [
+            'id_type' => $food->id_type,
+            'name' => $food->name,
+            'summary' => $food->summary,
+            'detail' => $food->detail,
+            'price' => $food->price,
+            'promotion' => $food->promotion,
+            'image' => $food->image,
+            'update_at' => $food->update_at,
+            'unit' => $food->unit,
+            'today' => $food->today,
+        
+        ];
+        
+        
+        if(empty($food->id))
+            $this->tableGateway->insert($data);
+        else if(!$this->findFood($food->id))
+            throw new RuntimeException("Không tìm thấy món ăn có id là $id");
+        else
+            $this->tableGateway->update($data, ['id' => $food->id]);
+    }
+
+    public function findFood($id)
+    {
+        // $id = (int)$id;
+        $food = $this->tableGateway->select(['id'=>$id])->current();
+        if(!$food){
+            throw new RuntimeException("Không tìm thấy món ăn có id là $id");
+
+        }
+        return $food;
+    }
+
+    public function deleteFood($id){
+        $this->tableGateway->delete(['id'=>$id]);
+    }
+
 }
 
 ?>

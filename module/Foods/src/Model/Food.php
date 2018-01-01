@@ -27,8 +27,13 @@ class Food
         $this->image = !empty($data['image'])?$data['image']: null;
         $this->update_at = !empty($data['update_at'])?$data['update_at']: null;
         $this->unit = !empty($data['unit'])?$data['unit']: null;
-        $this->today = !empty($data['today'])?$data['today']: null;
+        $this->today = !empty($data['today'])? 1 : 0;
     }
-
+    
+    public function getArrayCopy()
+    {
+        //để bind sang form
+        return get_object_vars($this);
+    }
 }
 ?>

@@ -7,6 +7,21 @@ $this->headTitle($title);
 
 <h1 class="cen"><?= $this->escapeHtml($title) ?></h1>
 
+
+<a href="<?=$this->url('Foods',['controller'=>'FoodsController', 'action'=>'add'])?>" class="btn btn-primary  pull-right">Thêm món ăn</a>    
+
+<!-- <?=$this->flashMessenger()->render('success',['alert', 'alert-success'])?> -->
+<?= $this->flashMessenger()
+            ->setMessageOpenFormat('<div%s>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <ul><li>')
+            ->setMessageSeparatorString('</li><li>')
+            ->setMessageCloseString('</li></ul></div>')
+            ->render('success',   array('alert', 'alert-dismissible', 'alert-success'));
+    ?>
+
 <table class="table table-hover">
     <thead>
         <tr>
@@ -19,6 +34,7 @@ $this->headTitle($title);
             <th>Đơn giá</th>
             <th>Khuyến mãi</th>
             <th>Hình ảnh</th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
@@ -35,8 +51,11 @@ $this->headTitle($title);
                 <td> <?= $food->price?> </td>
                 <td> <?= $food->promotion?> </td>
                 <td> <img style="width:120px; height:120px" src="img/hinh_mon_an/<?= $this->escapeHtml($food->image)?>" alt="<?= $this->escapeHtml($food->name)?>" >  </td>
-            
-            </tr>
+                <td>
+                    <a href="<?=$this->url('Foods',['controller'=>'FoodsController', 'action'=>'edit', 'id'=>$food->id])?>" class="btn btn-default">Sửa</a>    
+                    <a href="<?=$this->url('Foods',['controller'=>'FoodsController', 'action'=>'delete', 'id'=>$food->id])?>" class="btn btn-danger">Xóa</a>    
+                    
+                </tr>
 <?php endforeach;?>
     </tbody>
 </table>

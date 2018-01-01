@@ -9,7 +9,7 @@ use Zend\Stdlib\ArrayUtils;
  */
 
 
-
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 chdir(dirname(__DIR__));// thiet lap lai thu muc mac dinh
 
 // Decline static file requests back to the PHP built-in webserver
@@ -40,6 +40,7 @@ if (file_exists(__DIR__ . '/../config/development.config.php')) {
 }
 define('APPLICATION_PATH', dirname(__DIR__));
 define('FILE_PATH', APPLICATION_PATH.'/public/files/');
+define('IMAGE_PATH', APPLICATION_PATH.'/public/img/');
 // Run the application!
 Application::init($appConfig)->run();
 
