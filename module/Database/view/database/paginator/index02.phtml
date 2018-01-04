@@ -1,0 +1,42 @@
+<?php
+
+?>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Summary</th>
+            <th>Promotion</th>
+
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php 
+        
+        $stt = ($this->paginator->getCurrentPageNumber() - 1) * $this->paginator->getItemCountPerPage() + 1;
+        if(count($this->paginator)):
+            foreach($this->paginator as $item):
+    ?>        
+        <tr>
+            <td><?= $stt++?></td>
+            <td><?=$item['name']?></td>
+            <td><?=$item['summary']?></td>
+            <td><?=$item['promotion']?></td>
+            <td><?=$item['price']?></td>
+        </tr>
+    <?php 
+            endforeach;
+        endif;
+    
+    ?>
+    </tbody>
+</table>
+<?= $this->paginationControl(
+    $this->paginator,
+    'Jumping',
+    'paginator_control_index02',
+    ['route' => 'paginator']
+) ?>

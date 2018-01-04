@@ -43,7 +43,7 @@ return [
             'paginator' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/paginator[/page[/:page]]',
+                    'route'    => '/paginator[/:action[/page[/:page]]]',
                     'defaults' => [
                         'controller' => Controller\PaginatorController::class,
                         'action'     => 'index',

@@ -5,23 +5,26 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter;
+use Zend\Db\Adapter\Adapter as ADB;
+use Zend\Db\Sql\Select;
+use Zend\Paginator\Adapter\DbSelect;
 
 class PaginatorController extends AbstractActionController
 {
-    // private $adapter;
+    private $adapterDB;
 
-    // public function __construct()
-    // {
+    public function __construct()
+    {
             
-    //     $this->adapter = new Adapter([
-    //         'hostname'=>'localhost',
-    //         'database'=>'resstaurant',
-    //         'username'=>'root',
-    //         'password'=>'',
-    //         'driver'=>'Pdo_Mysql',
-    //         'charset'=>'utf8'
-    //     ]);
-    // }
+        $this->adapterDB = new ADB([
+            'hostname'=>'localhost',
+            'database'=>'resstaurant',
+            'username'=>'root',
+            'password'=>'',
+            'driver'=>'Pdo_Mysql',
+            'charset'=>'utf8'
+        ]);
+    }
 
     public function indexAction()
     {
@@ -52,6 +55,25 @@ class PaginatorController extends AbstractActionController
         return $view;
     }
 
+
+    public function index02Action()
+    {
+        $select = new Select();
+        $select->from('foods');
+        
+        $dbSelect = new DbSelect($select, $this->adapterDB);
+
+        $paginator = new Paginator($dbSelect);
+
+        $currentPage = $this->params()->fromRoute('page', 1);
+        
+
+        $paginator->setCurrentPageNumber($currentPage);
+        $paginator->setPageRange(3); //Số link trên trang
+        $paginator->setItemCountPerPage(10);
+        $view = new ViewModel(['paginator'=>$paginator]);
+        return $view;
+    }
 }
 
 
