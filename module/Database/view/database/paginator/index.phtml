@@ -1,0 +1,37 @@
+<?php
+
+?>
+<!-- <pre><? print_r($this->paginator); ?></pre> -->
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php 
+        if(count($this->paginator)):
+            foreach($this->paginator as $item):
+    ?>        
+        <tr>
+            <td><?=$item['name']?></td>
+            <td><?=$item['price']?></td>
+        </tr>
+    <?php 
+            endforeach;
+        endif;
+    
+    ?>
+    </tbody>
+</table>
+<?= $this->paginationControl(
+    $this->paginator,
+    'Sliding',
+    // 'paginator_control',
+    // 'paginator_control3',
+    // 'paginator_control2',
+    'bootstrap_paginator',
+    ['route' => 'paginator']
+) ?>
