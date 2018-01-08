@@ -8,7 +8,7 @@ $this->headTitle($title);
 <h1 class="cen"><?= $this->escapeHtml($title) ?></h1>
 
 
-<a href="<?=$this->url('Foods',['controller'=>'FoodsController', 'action'=>'add'])?>" class="btn btn-primary  pull-right">Thêm món ăn</a>    
+<a href="<?=$this->url('foods',['controller'=>'FoodsController', 'action'=>'add'])?>" class="btn btn-primary  pull-right">Thêm món ăn</a>    
 
 <!-- <?=$this->flashMessenger()->render('success',['alert', 'alert-success'])?> -->
 <?= $this->flashMessenger()
@@ -38,7 +38,7 @@ $this->headTitle($title);
         </tr>
     </thead>
     <tbody>
-        <?php
+        <!-- <?php
             $stt=1;
              foreach($foods as $food): ?>
             <tr>
@@ -52,10 +52,36 @@ $this->headTitle($title);
                 <td> <?= $food->promotion?> </td>
                 <td> <img style="width:120px; height:120px" src="img/hinh_mon_an/<?= $this->escapeHtml($food->image)?>" alt="<?= $this->escapeHtml($food->name)?>" >  </td>
                 <td>
-                    <a href="<?=$this->url('Foods',['controller'=>'FoodsController', 'action'=>'edit', 'id'=>$food->id])?>" class="btn btn-default">Sửa</a>    
-                    <a href="<?=$this->url('Foods',['controller'=>'FoodsController', 'action'=>'delete', 'id'=>$food->id])?>" class="btn btn-danger">Xóa</a>    
+                    <a href="<?=$this->url('foods',['controller'=>'FoodsController', 'action'=>'edit', 'id'=>$food->id])?>" class="btn btn-default">Sửa</a>    
+                    <a href="<?=$this->url('foods',['controller'=>'FoodsController', 'action'=>'delete', 'id'=>$food->id])?>" class="btn btn-danger">Xóa</a>    
                     
                 </tr>
-<?php endforeach;?>
+<?php endforeach;?> -->
+        <?php
+               $stt = ($this->paginator->getCurrentPageNumber() - 1) * $this->paginator->getItemCountPerPage() + 1;
+               if(count($this->paginator)):
+             foreach($paginator as $food): ?>
+            <tr>
+                <td><?= $stt++ ?></td>
+                <td> <?= $food['name'] ?> </td>
+                <td> <?= $food['name_type'] ?> </td>
+                <td> <?= $food['summary'] ?> </td>
+                <td> <?= $food['price'] ?> </td>
+                <td> <?= $food['promotion'] ?> </td>
+                <td> <img style="width:120px; height:120px" src="img/hinh_mon_an/<?= $this->escapeHtml($food['image']) ?>" alt="<?= $this->escapeHtml($food['name']) ?>" >  </td>
+                <td>
+                    <a href="<?=$this->url('foods',['controller'=>'FoodsController', 'action'=>'edit', 'id' => $food['id']])?>" class="btn btn-default">Sửa</a>    
+                    <a href="<?=$this->url('foods',['controller'=>'FoodsController', 'action'=>'delete', 'id'=>$food['id']]) ?>" class="btn btn-danger">Xóa</a>    
+                    
+                </tr>
+<?php endforeach;
+    endif;?>
     </tbody>
+    
 </table>
+<?= $this->paginationControl(
+    $this->paginator,
+    'Jumping',
+    'partial/bootstrap_paginator',
+    ['route' => 'foods']
+) ?>

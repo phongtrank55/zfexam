@@ -50,9 +50,8 @@ class PaginatorController extends AbstractActionController
         $currentPage = $this->params()->fromRoute('page', 1);
         $paginator->setCurrentPageNumber($currentPage);
         $paginator->setItemCountPerPage(5);
-        $view = new ViewModel(['paginator'=>$paginator]);
-
-        return $view;
+ 
+        return new ViewModel(['paginator'=>$paginator]);
     }
 
 
@@ -66,13 +65,12 @@ class PaginatorController extends AbstractActionController
         $paginator = new Paginator($dbSelect);
 
         $currentPage = $this->params()->fromRoute('page', 1);
-        
 
         $paginator->setCurrentPageNumber($currentPage);
         $paginator->setPageRange(3); //Số link trên trang
         $paginator->setItemCountPerPage(10);
-        $view = new ViewModel(['paginator'=>$paginator]);
-        return $view;
+
+        return new ViewModel(['paginator' => $paginator]);
     }
 }
 

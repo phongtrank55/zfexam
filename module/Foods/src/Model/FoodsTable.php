@@ -4,6 +4,9 @@ namespace Foods\Model;
 use RuntimeException;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Db\Sql\Sql;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter;
 
 class FoodsTable
 {
@@ -39,6 +42,40 @@ class FoodsTable
 
         return $results;
 
+    }
+
+    public function fetchAll2($paginated = false)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select(['f'=>'foods'])
+                    ->join(['ft'=>'food_type'], 'f.id_type=ft.id', ['name_type'=>'name']);
+        
+        if ($paginated) {
+            // create a new Select object for the table album
+            // $select = new Select('album');
+            // // create a new result set based on the Album entity
+            // $resultSetPrototype = new ResultSet();
+            // $resultSetPrototype->setArrayObjectPrototype(new Album());
+            // // create a new pagination adapter object
+
+        
+            $paginatorAdapter = new DbSelect(
+                // our configured select object
+                $select,
+                // the adapter to run it against
+                $this->tableGateway->getAdapter()
+              
+            );
+            $paginator = new Paginator($paginatorAdapter);
+
+            return $paginator;
+        }
+        // Trả về mảng ['name']
+        $stm = $sql->prepareStatementForSqlObject($select);
+        $results = $stm->execute();
+        
+        return $results;
     }
 
     public function getTableName()

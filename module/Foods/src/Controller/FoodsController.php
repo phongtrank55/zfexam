@@ -18,14 +18,23 @@ class FoodsController extends AbstractActionController
 
     public function indexAction()
     {
-        $foods = $this->table->fetchAll();
+        // $foods = $this->table->fetchAll();
         
         // echo '<pre>';
         // foreach($foods as $food)
         // print_r($food);
         // echo '</pre>';
         
-        return new ViewModel(['foods' => $foods]);
+        // return new ViewModel(['foods' => $foods]);
+        
+
+        $paginator = $this->table->fetchAll2(true);
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(5);
+   
+        return new ViewModel(['paginator' => $paginator]);
     }
 
     // public function getTableNameAction()

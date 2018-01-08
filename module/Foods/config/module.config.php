@@ -14,13 +14,14 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
-            'Foods' => [
+            'foods' => [
                 'type'    => Segment::class,
                 'options' => [
                     'route'    => '/foods[/:action[/:id]]',
                     'defaults' => [
                         'controller' => Controller\FoodsController::class,
                         'action'     => 'index',
+                        'page'       => 1,
                     ],
                     'constraints' =>[
                         'action'=> '[a-zA-Z][a-zA-Z0-9]*',
