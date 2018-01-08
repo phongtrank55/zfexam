@@ -21,7 +21,7 @@ return [
                     'defaults' => [
                         'controller' => Controller\FoodsController::class,
                         'action'     => 'index',
-                        'page'       => 1,
+                        
                     ],
                     'constraints' =>[
                         'action'=> '[a-zA-Z][a-zA-Z0-9]*',
@@ -34,7 +34,7 @@ return [
     'controllers' => [
         // 'factories' => [
             
-        //     Controller\FoodsComtroller::class => InvokableFactory::class,
+        //     Controller\FoodsController::class => InvokableFactory::class,
         // ],
     ],
     'view_manager' => [

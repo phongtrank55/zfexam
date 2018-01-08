@@ -26,7 +26,8 @@
         "zendframework/zend-i18n": "^2.7",
         "zendframework/zend-json": "^3.0",
         "zendframework/zend-mvc-plugins": "^1.0",
-        "zendframework/zend-paginator": "^2.8"
+        "zendframework/zend-paginator": "^2.8",
+        "doctrine/doctrine-orm-module": "^1.1"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +36,8 @@
             "Started\\": "module/Started/src/",
             "Form\\": "module/Form/src/",
             "Database\\": "module/Database/src/",
-            "Foods\\": "module/Foods/src/" 
+            "Foods\\": "module/Foods/src/",
+            "Users\\": "module/Users/src/" 
         }
     },
     "autoload-dev": {
