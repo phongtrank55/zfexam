@@ -33,6 +33,6 @@ return [
     'Database',
     'Training',
     'Started',
-    'Users',
     'Foods',
+    'Users',
 ];
