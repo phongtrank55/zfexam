@@ -184,7 +184,7 @@ class Fieldset extends Element implements FieldsetInterface
         if (array_key_exists('priority', $flags)) {
             $order = $flags['priority'];
         }
-
+        
         $this->iterator->insert($name, $elementOrFieldset, $order);
 
         if ($elementOrFieldset instanceof FieldsetInterface) {

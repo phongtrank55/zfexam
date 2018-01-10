@@ -17,16 +17,39 @@ class UserController extends AbstractActionController
         $this->entityManger = $entityManger;
         $this->userManager = $userManager;
     }
+ 
     public function indexAction()
     {
         $users =  $this->entityManger->getRepository(User::class)->findAll();
         // $users =  $this->entityManger->getResponsitory(User::class)->findBy([]);
 
-        echo '<pre>';
-        print_r($users);
-        echo '</pre>';
-        return false;
-        //return new ViewModel();
+        return new ViewModel(['users' => $users]);
+    }
+
+    public function registerAction()
+    {
+        $form = new UserForm();
+        $request = $this->getRequest();
+        if($request->isPost())
+        {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+
+            if($form->isValid())
+            {
+                $data =$form->getData();
+                echo '<pre>';
+                print_r($data);
+                echo '</pre>';
+            }
+            // else{
+            //     echo '<pre>';
+            //     print_r($form->getMessages());
+            //     echo '</pre>';
+            // }
+        }
+
+        return new ViewModel(['form' => $form]);
     }
 }
 

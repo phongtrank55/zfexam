@@ -30,10 +30,15 @@ class User
     private $fullname;
     /** @Column(type="date") */
     private $birthdate;
+    /** @Column() */
     private $gender;
+     /** @Column() */
     private $address;
+     /** @Column() */
     private $email;
+     /** @Column() */
     private $phone;
+     /** @Column() */
     private $role;
     // /** @Column(name="pw_reset_token") */
     // private $pwResetToken;
@@ -66,7 +71,7 @@ class User
     public function setBirthdate($birthdate) { return $this->birthdate = $birthdate;}
     
     /** @return */
-    public function getGender() { return $this->gender; }
+    public function getGender() { return $this->gender; } 
     /** @param */
     public function setGender($gender) { return $this->gender = $gender;}
     

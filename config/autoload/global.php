@@ -38,6 +38,7 @@ return [
                     'user'     => 'root',
                     'password' => '',
                     'dbname'   => 'resstaurant',
+                    'charset'  => 'utf8'
                 ],
             ],
         ],
