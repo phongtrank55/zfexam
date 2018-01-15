@@ -6,6 +6,7 @@ use Zend\View\Model\ViewModel;
 use Users\Entity\User;
 use Users\Form\UserForm;
 use Users\Form\ChangePasswordForm;
+use Users\Form\ResetPasswordForm;
 
 class UserController extends AbstractActionController
 {
@@ -171,6 +172,34 @@ class UserController extends AbstractActionController
 
             }
 
+        }
+
+        return new ViewModel(['form' => $form]);
+    }
+
+    public function resetPasswordAction(){
+        $form = new ResetPasswordForm();
+
+        if($this->getRequest()->isPost())
+        {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid())
+            {
+                $data = $form->getData();
+                $user = $this->entityManger->getRepository(User::class)->findOneByEmail($data['email']);
+                if($user!==null)
+                {
+                    $this->userManager->createTokenPasswordReset($user);
+                    $this->flashMessenger()->addSuccessMessage("Kiểm tra email để reset mật khẩu!");
+             
+                }
+                else
+                    $this->flashMessenger()->addErrorMessage("Email không tồn tại!");
+
+                return $this->redirect()->toRoute('user', ['action' => 'resetPassword']);
+            }
+            
         }
 
         return new ViewModel(['form' => $form]);

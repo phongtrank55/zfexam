@@ -3,6 +3,10 @@ namespace Users\Service;
 
 use Users\Entity\User;
 use Zend\Crypt\Password\Apache;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Sendmail;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
 
 class UserManager
 {
@@ -107,6 +111,49 @@ class UserManager
 
         $user->setPassword((new Apache(['format' => 'md5']))->create($data['new_pw']));
         $this->entityManager->flush();
+    }
+
+    public function createTokenPasswordReset($user){
+        $token = \Zend\Math\Rand::getString(32, "1234567890ghjklqwertyuiopzxcvbnm", true);
+        $user->setPwResetToken($token);
+        $user->setPwResetTokenDate(new \DateTime());
+
+        $this->entityManager->flush();
+
+
+        //tạo tin nhắn
+        $message = new Message();
+
+        $http = isset($_SERVER['HTTPS']) ? "https://" :"http://";
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+        $url = $http.$host."/zfexam/public/user/setPassword/".$token;
+
+        $bodyMessage = "Chào bạn ".$user->getFullname()."\nBạn vui lòng chọn link bên dưới để thực hiện reset mật khẩu:\n
+                        $url\nNếu bạn không yêu cầu reset, xin vui lòng bỏ qua thông báo này";
+        $message->addFrom("daugaudatinh@gmail.com")
+                ->addTo($user->getEmail())
+                ->setSubject('Reset Password')
+                ->setBody($bodyMessage);
+
+        //Gửi
+        
+        $transport = new SmtpTransport();
+        $options   = new SmtpOptions([
+            'name'              => 'smtp.gmail.com',
+            'host'              => 'smtp.gmail.com',
+            'port'              => 587,
+            'connection_class'  => 'login',
+            'connection_config' => [
+                'username' => 'daugaudatinh@gmail.com',
+                'password' => 'Thanhpro',
+                'port'     => 587,
+                'ssl'      => 'tls'
+            ],
+        ]);
+        $transport->setOptions($options);
+        $transport->send($message);
+        
+
     }
 }
 ?>
