@@ -38,8 +38,11 @@ $this->headTitle($title);
             <td><?=$user->getEmail()?></td>
             <td><?=$user->getPhone()?></td>
             <td>
+
                 <a href="<?=$this->url('user', ['action' => 'edit'], ['query'=>['id'=>$user->getId()]])?>" class="btn-sm btn-warning">Sửa</a>
-                <a href="<?=$this->url('user', ['action' => 'delete'], ['query'=>['id'=>$user->getId()]])?>" class="btn-sm btn-danger">Xóa</a>
+                <a href="<?=$this->url('user', ['action' => 'delete'], ['query'=>['id'=>$user->getId()]])?>" class="btn-sm btn-danger">Xóa</a>                
+                <br>
+                <a href="<?=$this->url('user', ['action' => 'changePassword'], ['query'=>['id'=>$user->getId()]])?>" class="btn-sm btn-info">Đổi mật khẩu</a>
             </td>
         </tr>
             <?php endforeach;?>

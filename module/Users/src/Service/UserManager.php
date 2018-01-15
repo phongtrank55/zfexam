@@ -83,8 +83,29 @@ class UserManager
         
     }
 
-    function removeUser($user){
+    public function removeUser($user){
         $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
+
+    private function verifyPassword($securePass, $password)
+    {
+        $apache = new Apache(['format' => 'md5']);
+        return $apache->verify($password, $securePass);
+    }
+
+    public function changePassword($user, $data)
+    {
+        if($data['old_pw']==$data['new_pw'])
+            throw new \Exception("Mật khẩu cũ giống mật khẩu mới");
+
+        $securePass = $user->getPassword();
+        $password = $data['old_pw'];
+
+        if($this->verifyPassword($securePass, $password))
+            throw new \Exception("Mật khẩu cữ không đúng!");
+
+        $user->setPassword((new Apache(['format' => 'md5']))->create($data['new_pw']));
         $this->entityManager->flush();
     }
 }
