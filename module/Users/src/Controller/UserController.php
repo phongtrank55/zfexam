@@ -37,10 +37,25 @@ class UserController extends AbstractActionController
 
             if($form->isValid())
             {
-                $data =$form->getData();
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
+                // $data =$form->getData();
+                // echo '<pre>';
+                // print_r($data);
+                // echo '</pre>';
+                // die;
+                try{
+                    $user = $this->userManager->addUser($data);
+
+                    // echo '<pre>';
+                    // print_r($user);
+                    // echo '</pre>';
+                //    die;
+                    $this->flashMessenger()->addSuccessMessage("Thêm thành công!");
+                    return $this->redirect()->toRoute('user');
+                }
+                catch(\Exception $ex)
+                {
+                    $this->flashMessenger()->addErrorMessage($ex->getMessage());
+                }
             }
             // else{
             //     echo '<pre>';
@@ -50,6 +65,78 @@ class UserController extends AbstractActionController
         }
 
         return new ViewModel(['form' => $form]);
+    }
+
+    public function editAction()
+    {
+        $form = new UserForm(false);
+
+        $id = (int)$this->params()->fromQuery('id', 0);
+        if($id <= 0)
+            return $this->getResponse()->setStatusCode('404');
+        
+        $user = $this->entityManger->getRepository(User::class)->find($id);
+        if(!$user)
+            return $this->getResponse()->setStatusCode('404');
+        
+        if($this->getRequest()->isGet())
+        {
+            $data = [
+                'id' => $user->getId(),
+                'username' => $user->getUserName(),
+                'fullname' => $user->getFullname(),
+                'email' => $user->getEmail(),
+                'address' => $user->getAddress(),
+                'birthdate' => $user->getBirthDate(),
+                'gender' => $user->getGender(),
+                'phone' => $user->getPhone(),
+                'role'=> $user->getRole()
+            ];
+            $form->setData($data);
+        
+        }
+        else{
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid())
+            {
+                $data = $form->getData();
+                try{
+                    $this->userManager->editUser($user, $data);
+                    $this->flashMessenger()->addSuccessMessage("Cập nhật thành công!");
+                    return $this->redirect()->toRoute('user');
+                }
+                catch(\Exception $ex)
+                {
+                    $this->flashMessenger()->addErrorMessage($ex->getMessage());
+                }
+            }
+        }
+        
+        return new ViewModel(['form' => $form]);
+    }
+
+    public function deleteAction()
+    {
+
+        $id = (int)$this->params()->fromQuery('id', 0);
+        if($id <= 0)
+            return $this->getResponse()->setStatusCode('404');
+        
+        $user = $this->entityManger->getRepository(User::class)->find($id);
+        if(!$user)
+            return $this->getResponse()->setStatusCode('404');
+
+        if($this->getRequest()->isPost()){
+            $btn=$this->getRequest()->getPost('delete', 'No');
+            if($btn=='Yes')
+            {
+                $this->userManager->removeUser($user);
+                $this->flashMessenger()->addSuccessMessage("Đã xóa thành công!");
+                return $this->redirect()->toRoute('user');
+            }
+        }
+        return new ViewModel(['user' => $user]);
     }
 }
 

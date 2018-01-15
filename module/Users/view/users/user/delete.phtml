@@ -1,0 +1,20 @@
+<?php
+$title = "Xóa tài khoản";
+$this->headTitle($title);
+
+?>
+
+<div class="row">
+    <form action="" method="POST">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-2">
+    <h3 align="center">Bạn có chắc chắn muốn xóa Tài khoản <?=$user->getUsername()?></h3>
+    
+    <input type="hidden" name='id' value="<?=$user->getId()?>">
+
+    <input type="submit" name="delete" value="Yes" class="btn btn-danger">
+    
+    <a href="<?=$this->url('user')?>" class="btn btn-default">No</a>
+    
+    </form>
+    </div>
+</div>

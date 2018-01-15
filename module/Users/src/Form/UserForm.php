@@ -22,7 +22,11 @@ class UserForm extends Form
 
     private function addElement()
     {
-        
+        $this->add([
+            'name' => 'id',
+            'type' => 'hidden'
+        ]);
+
         $this->add([
             'name' => 'username',
             'type'=>'text',
@@ -35,28 +39,29 @@ class UserForm extends Form
                 'id' => 'username'
             ],
         ]);
-    
-        $this->add([
-            'type'=>'password',
-            'name' => 'password',
-            'attributes' =>[
-                'class' => 'form-control'
-            ],
-            'options' => [
-                'label' => 'Mật khẩu: '
-            ],
-        ]);
+        if($this->isAdd){
+            $this->add([
+                'type'=>'password',
+                'name' => 'password',
+                'attributes' =>[
+                    'class' => 'form-control'
+                ],
+                'options' => [
+                    'label' => 'Mật khẩu: '
+                ],
+            ]);
 
-        $this->add([
-            'type'=>'password',
-            'name' => 'confirm_password',
-            'attributes' =>[
-                'class' => 'form-control'
-            ],
-            'options' => [
-                'label' => 'Nhập lại mật khẩu: '
-            ],
-        ]);
+            $this->add([
+                'type'=>'password',
+                'name' => 'confirm_password',
+                'attributes' =>[
+                    'class' => 'form-control'
+                ],
+                'options' => [
+                    'label' => 'Nhập lại mật khẩu: '
+                ],
+            ]);
+        }
         
 
         $this->add([
@@ -71,7 +76,7 @@ class UserForm extends Form
         ]);
 
         $this->add([
-            'type' => 'text',
+            'type' => 'date',
             'name' => 'birthdate',
             
             'attributes' =>[
@@ -96,7 +101,7 @@ class UserForm extends Form
                     'class' => 'radio-inline',
                 ],
                 'value_options' => [
-                    'nũ' => 'Nữ',
+                    'nữ' => 'Nữ',
                     'nam' => 'Nam',
                     'khác' => 'Khác'
                 ]
@@ -154,13 +159,14 @@ class UserForm extends Form
                 ],
             ],
         ]);
-
+        
+        
         $this->add([
             'type' => 'submit',
             'name' => 'btnSubmit',
             'attributes' => [
                 'class' => 'btn btn-success',
-                'value' => 'Đăng ký'
+                'value' => ($this->isAdd ? 'Đăng ký': 'Cập nhật')
             ]
         ]);
     }
@@ -201,52 +207,83 @@ class UserForm extends Form
                 ],
             ]
         ]);
+        if($this->isAdd){
 
-        $inputFilter->add([
-            'name' => 'password',
-            'required' => true,
-            'filters' => [
-                ['name'=>'StringTrim'],
-                ['name'=>'StripTags'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'messages' => [
-                            \Zend\Validator\NotEmpty::IS_EMPTY => "Mật khẩu không thể để trống",
-                        ],
-                    ],
+            $inputFilter->add([
+                'name' => 'password',
+                'required' => true,
+                'filters' => [
+                    ['name'=>'StringTrim'],
+                    ['name'=>'StripTags'],
                 ],
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'min' => 6,
-                        'max' => 20,
-                        'messages' => [
-                            \Zend\Validator\StringLength::TOO_LONG => 'Mật khẩu không được vượt quá %max% ký tự!',
-                            \Zend\Validator\StringLength::TOO_SHORT => 'Mật khẩu phải ít nhất %min% ký tự!'
+                'validators' => [
+                    [
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "Mật khẩu không thể để trống",
+                            ],
                         ],
                     ],
-                ],
-                [
-                    'name' => 'Regex',
-                    'options' => [
-                        'pattern'=>'/[A-Z0-9a-z_-]/',
-                        'messages'=>[
-                            \Zend\Validator\Regex::INVALID   => "Mật khẩu không hợp lệ",
-                            \Zend\Validator\Regex::NOT_MATCH => "Mật khẩu không đúng mẫu '%pattern%'",
-                            \Zend\Validator\Regex::ERROROUS  => "Mât khẩu lỗi nội bộ khi dùng '%pattern%'",  
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'min' => 6,
+                            'max' => 20,
+                            'messages' => [
+                                \Zend\Validator\StringLength::TOO_LONG => 'Mật khẩu không được vượt quá %max% ký tự!',
+                                \Zend\Validator\StringLength::TOO_SHORT => 'Mật khẩu phải ít nhất %min% ký tự!'
+                            ],
                         ],
                     ],
+                    [
+                        'name' => 'Regex',
+                        'options' => [
+                            'pattern'=>'/[A-Z0-9a-z_-]/',
+                            'messages'=>[
+                                \Zend\Validator\Regex::INVALID   => "Mật khẩu không hợp lệ",
+                                \Zend\Validator\Regex::NOT_MATCH => "Mật khẩu không đúng mẫu '%pattern%'",
+                                \Zend\Validator\Regex::ERROROUS  => "Mât khẩu lỗi nội bộ khi dùng '%pattern%'",  
+                            ],
+                        ],
+                    ]
                 ]
-            ]
-        ]);
+            ]);
+            $inputFilter->add([
+                'name' => 'confirm_password',
+                'required' => true,
+                'filters' => [
+                    ['name'=>'StringTrim'],
+                    ['name'=>'StripTags'],
+                ],
+                'validators' => [
+                    [
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => [
+                            'messages' => [
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "Hãy xác nhận mật khẩu",
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => 'Identical',
+                        'options' => [
+                            'token' => 'password',
+                            'messages' => [
+                                \Zend\Validator\Identical::NOT_SAME  => "Mật khẩu không trùng nhau",
+                                \Zend\Validator\Identical::MISSING_TOKEN  => "MISSING TOKEN",
+                            ],
+                        ]
+                    ]
+                ]
+            ]);
+        }
 
         $inputFilter->add([
             'name' => 'email',
-            'required' => false,
+            'required' => true,
             'filters' => [
                 ['name'=>'StringTrim'],
                 ['name'=>'StripTags'],
@@ -278,17 +315,17 @@ class UserForm extends Form
                 ['name'=>'StringTrim'],
                 ['name'=>'StripTags'],
             ],
-            'validators' => [
-                [
-                    'name' => 'date',
-                    'options' => [
-                        'format' => 'd/m/Y',
-                        'messages' => [
-                            \Zend\Validator\Date::FALSEFORMAT  => "Không đúng định dạng '%format%'",
-                        ],
-                    ]
-                ]
-            ]
+            // 'validators' => [
+            //     [
+            //         'name' => 'date',
+            //         'options' => [
+            //             'format' => 'd/m/Y',
+            //             'messages' => [
+            //                 \Zend\Validator\Date::FALSEFORMAT  => "Không đúng định dạng '%format%'",
+            //             ],
+            //         ]
+            //     ]
+            // ]
         ]);
         
         $inputFilter->add([
@@ -296,36 +333,7 @@ class UserForm extends Form
             'required' => false,
         ]);
 
-        $inputFilter->add([
-            'name' => 'confirm_password',
-            'required' => true,
-            'filters' => [
-                ['name'=>'StringTrim'],
-                ['name'=>'StripTags'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'messages' => [
-                            \Zend\Validator\NotEmpty::IS_EMPTY => "Hãy xác nhận mật khẩu",
-                        ],
-                    ],
-                ],
-                [
-                    'name' => 'Identical',
-                    'options' => [
-                        'token' => 'password',
-                        'messages' => [
-                            \Zend\Validator\Identical::NOT_SAME  => "Mật khẩu không trùng nhau",
-                            \Zend\Validator\Identical::MISSING_TOKEN  => "MISSING TOKEN",
-                        ],
-                    ]
-                ]
-            ]
-        ]);
-
+        
         
     }
 }

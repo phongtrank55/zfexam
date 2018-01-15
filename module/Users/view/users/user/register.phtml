@@ -12,6 +12,7 @@ $form->prepare();
 <div class="row">
  
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-2">
+    <?=$this->flashMessenger()->render('error', ['alert', 'alert-danger']);?>
         <?=$this->form()->openTag($form)?>
             <div class="form-group">   
                 <label class="control-label col-sm-4" >
