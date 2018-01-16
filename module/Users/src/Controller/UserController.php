@@ -102,7 +102,7 @@ class UserController extends AbstractActionController
             $form->setData($data);
             if($form->isValid())
             {
-                $data = $form->getData();
+                // $data = $form->getData();
                 try{
                     $this->userManager->editUser($user, $data);
                     $this->flashMessenger()->addSuccessMessage("Cập nhật thành công!");
@@ -158,7 +158,7 @@ class UserController extends AbstractActionController
             $form->setData($data);
             if($form->isValid())
             {
-                $data = $form->getData();
+                // $data = $form->getData();
                 try
                 {
                     $this->userManager->changePassword($user, $data);
@@ -186,7 +186,7 @@ class UserController extends AbstractActionController
             $form->setData($data);
             if($form->isValid())
             {
-                $data = $form->getData();
+                // $data = $form->getData();
                 $user = $this->entityManger->getRepository(User::class)->findOneByEmail($data['email']);
                 if($user!==null)
                 {
@@ -205,6 +205,39 @@ class UserController extends AbstractActionController
         return new ViewModel(['form' => $form]);
     }
 
+    public function setPasswordAction()
+    {
+        $token = $this->params()->fromRoute('token', null);
+        
+        if($token == null || strlen($token) != 32)
+            throw new \Exception("Token không hợp lệ!");
+        if(!$this->userManager->checkTokenPasswordReset($token))
+            throw new \Exception("Kiểm tra lại token");
+        
+        $form = new ChangePasswordForm(false);
+        
+        if($this->getRequest()->isPost())
+        {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid())
+            {
+                if($this->userManager->setPasswordByToken($token, $data['new_pw'])){
+                    $this->flashMessenger()->addSuccessMessage("Đã đặt lại mật khẩu thành công");
+                    return $this->redirect()->toRoute('user');
+                }
+                else
+               {    
+                    $this->flashMessenger()->addErrorMessage("Đã có lỗi xảy ra");
+                    return $this->redirect()->toRoute('setpassword', ['token' => $token]);
+               }
+            }
+            
+        }
+
+        return new ViewModel(['form' => $form]);
+        
+    }
 }
 
 ?>

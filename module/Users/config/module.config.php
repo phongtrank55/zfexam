@@ -14,6 +14,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
+            
             'user' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -26,6 +27,20 @@ return [
                     'constraints' =>[
                         'action'=> '[a-zA-Z][a-zA-Z0-9]*',
                         'id'=> '[0-9]+',
+                    ]
+                ],
+            ],
+            'setpassword' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/set-password[/:token]',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'setPassword',
+                        
+                    ],
+                    'constraints' =>[
+                        'token'=> '[a-zA-Z][a-zA-Z0-9]*',
                     ]
                 ],
             ],

@@ -8,17 +8,18 @@ use Zend\InputFilter\InputFilter;
 
 class ChangePasswordForm extends Form
 {
-    public function __construct()
+    private $isChangePassword;
+    public function __construct($isChangePassword = true)
     {
         parent::__construct();
-        
+        $this->isChangePassword = $isChangePassword;
         $this->addElement();
         $this->validateForm();
     }
 
     private function addElement()
     {
-    
+        
         $this->add([
             'type'=>'password',
             'name' => 'old_pw',
@@ -81,7 +82,7 @@ class ChangePasswordForm extends Form
         
             $inputFilter->add([
                 'name' => 'old_pw',
-                'required' => true,
+                'required' => $this->isChangePassword,
                 'filters' => [
                     ['name'=>'StringTrim'],
                     ['name'=>'StripTags'],

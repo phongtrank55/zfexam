@@ -126,7 +126,7 @@ class UserManager
 
         $http = isset($_SERVER['HTTPS']) ? "https://" :"http://";
         $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-        $url = $http.$host."/zfexam/public/user/setPassword/".$token;
+        $url = $http.$host."/zfexam/public/set-password/".$token;
 
         $bodyMessage = "Chào bạn ".$user->getFullname()."\nBạn vui lòng chọn link bên dưới để thực hiện reset mật khẩu:\n
                         $url\nNếu bạn không yêu cầu reset, xin vui lòng bỏ qua thông báo này";
@@ -154,6 +154,37 @@ class UserManager
         $transport->send($message);
         
 
+    }
+
+    public function checkTokenPasswordReset($token)
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['pwResetToken' => $token]);
+        if($user)
+        {
+            $userTokenDate = $user->getPwResetTokenDate()->getTimestamp();
+            $now = (new \DateTime())->getTimestamp();
+            if($now - $userTokenDate > 86400){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function setPasswordByToken($token, $newPassword)
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['pwResetToken' => $token]);
+        if($user)
+        {
+            $user->setPassword((new Apache(['format' => 'md5']))->create($newPassword));
+            //reset token
+            $user->setPwResetToken(null);
+            $user->setPwResetTokenDate(null);
+
+            $this->entityManager->flush();
+            return true;
+        }
+        return false;
     }
 }
 ?>
