@@ -11,6 +11,10 @@
  * file.
  */
 
+use Zend\Session\Validator\HttpUserAgent;
+use Zend\Session\Validator\RemoteAddr;
+use Zend\Session\Storage\SessionArrayStorage;
+
 return [
     'db'=>[
         'driver' => 'Pdo',
@@ -43,4 +47,19 @@ return [
             ],
         ],
     ],
+    'session_config' => [
+        'cookie_lifetime' => 300,
+        'gc_maxlifetime' => 300,
+
+    ],
+    'session_manager' => [
+        'validators' => [
+            RemoteAddr::class,
+            HttpUserAgent::class
+        ],
+    ],
+    'session_storage' => [
+        'type' => SessionArrayStorage::class        
+    ]
+
 ];
