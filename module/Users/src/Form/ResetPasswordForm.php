@@ -37,7 +37,7 @@ class ResetPasswordForm extends Form
                     'captcha' =>[
                         'class'=>'Image',
                         'imgDir'=>'public/img/captcha',//noi luu anh captcha
-                        'imgUrl' => '../img/captcha',//noi trinh duyet lay anh de hien thi
+                        'imgUrl' => 'img/captcha',//noi trinh duyet lay anh de hien thi
                         'suffix' => '.png',
                         'font'=> APPLICATION_PATH.'/data/font/Pangolin-Regular.ttf',
                         'fsize'=>50,

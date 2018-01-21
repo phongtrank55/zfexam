@@ -168,6 +168,7 @@ class UserController extends AbstractActionController
                 catch(\Exception $e)
                 {
                     $this->flashMessenger()->addErrorMessage($e->getMessage());
+                    return $this->redirect()->toRoute('user', ['action' => 'changePassword']);
                 }
 
             }

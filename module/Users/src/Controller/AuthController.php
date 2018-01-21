@@ -31,14 +31,28 @@ class AuthController extends AbstractActionController
             $form->setData($data);
             if($form->isValid())
             {
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
-                die;
+                
+                $result = $this->authManager->login($data['username'], $data['password'], $data['remember']);
+                if($result->getCode()==1)
+                {
+                    return $this->redirect()->toRoute('user');
+                }
+                else
+                {
+                    $this->flashMessenger()->addErrorMessage($result->getMessages());
+                    return $this->redirect()->toRoute('login');
+
+                }
             }
 
         }
         return new ViewModel(['form' => $form]);
+    }
+
+    public function logoutAction()
+    {
+        $this->authManager->logout();
+        return $this->redirect()->toRoute('login');
     }
 }
 ?>

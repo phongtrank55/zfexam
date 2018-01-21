@@ -45,13 +45,34 @@ return [
                     ]
                 ],
             ],
+            'resetpassword' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/reset-password',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'resetPassword',
+                        
+                    ],
+                ],
+            ],
             'login' => [
                 'type'=>Literal::class,
                 'options'=>[
                     'route'=>'/login',
                     'defaults'=>[
-                        'controller'=>Controller\AuthController::class,
-                        'action'=>'login'
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'login'
+                    ],
+                ],
+            ],
+            'loout' => [
+                'type'=>Literal::class,
+                'options'=>[
+                    'route'=>'/logout',
+                    'defaults'=>[
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'logout'
                     ],
                 ],
             ],
@@ -97,6 +118,22 @@ return [
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
+        ],
+    ],
+    'access_filter' => [
+        'controllers' => [
+            Controller\UserController::class => [
+                //liet ke cac action cho phep khi chua dang nhap
+                [
+                    'actions' => ['resetPassword', 'setPassword'],
+                    'allow' => '*'
+                ],
+                //liet ke cac action cho phep khi da dang nhap
+                [
+                    'actions' => ['index', 'register', 'delete', 'edit', 'changePassword'],
+                    'allow' => '@'
+                ]
+            ]
         ]
     ]
 ];
