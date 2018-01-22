@@ -41,7 +41,8 @@
             "Form\\": "module/Form/src/",
             "Database\\": "module/Database/src/",
             "Foods\\": "module/Foods/src/",
-            "Users\\": "module/Users/src/" 
+            "Users\\": "module/Users/src/" ,
+            "Food2\\": "module/Food2/src/" 
         }
     },
     "autoload-dev": {

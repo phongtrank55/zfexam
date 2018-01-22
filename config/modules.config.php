@@ -36,4 +36,5 @@ return [
     'Started',
     'Foods',
     'Users',
+    'Food2',
 ];

@@ -39,7 +39,7 @@ class AuthAdapter implements AdapterInterface
             $apache = new Apache(['format' => 'md5']);
             if($apache->verify($this->password, $user->getPassword()))     
             {
-                return new Result(Result::SUCCESS, $this->username, ['Đăng nhập thành công']);
+                return new Result(Result::SUCCESS, $user, ['Đăng nhập thành công']);
             }
             else
             {

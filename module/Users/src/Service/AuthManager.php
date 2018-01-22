@@ -17,7 +17,11 @@ class AuthManager
     public function login($username, $password, $rememberMe)
     {
         if($this->authenticationService->hasIdentity())
+        {
             throw new \Exception("Ban da dang nhap!");
+            
+            
+        }
         
         $authAdapter = $this->authenticationService->getAdapter();
         $authAdapter->setUsername($username);

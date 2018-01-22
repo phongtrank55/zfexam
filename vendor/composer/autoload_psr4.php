@@ -54,6 +54,7 @@ return array(
     'Hello\\' => array($baseDir . '/module/Hello/src'),
     'Form\\' => array($baseDir . '/module/Form/src'),
     'Foods\\' => array($baseDir . '/module/Foods/src'),
+    'Food2\\' => array($baseDir . '/module/Food2/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Common/Inflector'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
